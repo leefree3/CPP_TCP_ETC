@@ -21,6 +21,44 @@ namespace Client
 
         private bool playing = false;
 
+        private bool judge()// 승리 판정함수
+        {   //가로 5 알이 현재 플레이어와 같을 경우
+            //판정 메서드
+            for (int i = 0; i < edgeCount - 4; i++)
+                for (int j = 0; j < edgeCount; j++)
+                    if (board[i, j] == nowPlayer && board[i + 1, j] == nowPlayer &&
+                        board[i + 2, j] == nowPlayer && board[i + 3, j] == nowPlayer && board[i + 4, j] == nowPlayer)
+                        return true;
+            //세로 5 알이 현재 플레이어와 같을 경우
+            for (int i = 0; i < edgeCount; i++)
+                for (int j = 4; j < edgeCount; j++)
+                    if (board[i, j] == nowPlayer && board[i, j - 1] == nowPlayer &&
+                        board[i, j - 2] == nowPlayer && board[i, j - 3] == nowPlayer && board[i, j - 4] == nowPlayer)
+                        return true;
+            //y = x 직선
+            for (int i = 0; i < edgeCount - 4; i++)
+                for (int j = 0; j < edgeCount - 4; j++)
+                    if (board[i, j] == nowPlayer && board[i + 1, j + 1] == nowPlayer &&
+                        board[i + 2, j + 2] == nowPlayer && board[i + 3, j + 3] == nowPlayer && board[i + 4, j + 4] == nowPlayer)
+                        return true;
+            //y = -x 직선
+            for (int i = 4; i < edgeCount; i++)
+                for (int j = 0; j < edgeCount - 4; j++)
+                    if (board[i, j] == nowPlayer && board[i - 1, j + 1] == nowPlayer &&
+                        board[i - 2, j + 2] == nowPlayer && board[i - 3, j + 3] == nowPlayer && board[i - 4, j + 4] == nowPlayer)
+                        return true;
+            return false;
+        }
+
+        private void refresh()
+        {
+            //초기화
+            this.boardPicture.Refresh();
+            for (int i = 0; i < edgeCount; i++)
+                for (int j = 0; j < edgeCount; j++)
+                    board[i, j] = Horse.none;
+        }
+
         public SinglePlayForm()
         {
             InitializeComponent();
@@ -90,43 +128,7 @@ namespace Client
             }
         }
 
-        private bool judge()// 승리 판정함수
-        {   //가로 5 알이 현재 플레이어와 같을 경우
-            //판정 메서드
-            for (int i = 0; i < edgeCount - 4; i++)
-                for (int j = 0; j < edgeCount; j++)
-                    if (board[i, j] == nowPlayer && board[i + 1, j] == nowPlayer && 
-                        board[i + 2, j] == nowPlayer && board[i + 3, j] == nowPlayer && board[i + 4, j] == nowPlayer)
-                        return true;
-            //세로 5 알이 현재 플레이어와 같을 경우
-            for (int i = 0; i < edgeCount ; i++)
-                for (int j = 4; j < edgeCount; j++)
-                    if (board[i, j] == nowPlayer && board[i, j-1] == nowPlayer && 
-                        board[i, j-2] == nowPlayer && board[i, j-3] == nowPlayer && board[i, j-4] == nowPlayer)
-                        return true;
-            //y = x 직선
-            for (int i = 0; i < edgeCount -4 ; i++)
-                for (int j = 0; j < edgeCount -4; j++)
-                    if (board[i, j] == nowPlayer && board[i+1, j+1] == nowPlayer && 
-                        board[i+2, j+2] == nowPlayer && board[i+3, j+3] == nowPlayer && board[i+4, j+4] == nowPlayer)
-                        return true;
-            //y = -x 직선
-            for (int i = 4; i < edgeCount ; i++)
-                for (int j = 0; j < edgeCount - 4; j++)
-                    if (board[i, j] == nowPlayer && board[i - 1, j + 1] == nowPlayer &&
-                        board[i - 2, j + 2] == nowPlayer && board[i - 3, j + 3] == nowPlayer && board[i - 4, j + 4] == nowPlayer)
-                        return true;
-            return false;
-        }
-
-        private void refresh()
-        {
-            //초기화
-            this.boardPicture.Refresh();
-            for (int i = 0; i < edgeCount; i++)
-                for (int j = 0; j < edgeCount; j++)
-                    board[i, j] = Horse.none;
-        }
+        
 
         private void playButton_Click(object sender, EventArgs e)
         {
@@ -144,5 +146,6 @@ namespace Client
                 status.Text = "게임이 재시작되었습니다.";
             }
         }
+
     }
 }

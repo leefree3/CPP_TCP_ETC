@@ -17,11 +17,6 @@ namespace Client
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void siglePlayButton_Click(object sender, EventArgs e)
         {
             Hide();
@@ -39,9 +34,12 @@ namespace Client
             Show();
         }
 
-        private void MenuForm_Load(object sender, EventArgs e)
+        private void multiPlayButton_Click(object sender, EventArgs e)
         {
-
+            Hide();
+            MultiPlayForm multiPlayForm = new MultiPlayForm();
+            multiPlayForm.FormClosed += new FormClosedEventHandler(childForm_Closed);
+            multiPlayForm.Show();
         }
     }
 }
